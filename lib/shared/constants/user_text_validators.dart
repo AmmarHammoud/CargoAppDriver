@@ -1,0 +1,8 @@
+import 'package:flutter/material.dart';
+
+class UserTextValidators{
+  final GlobalKey<FormState> emailValidator = GlobalKey<FormState>();
+  final GlobalKey<FormState> passwordValidator = GlobalKey<FormState>();
+  final GlobalKey<FormState> phoneValidator = GlobalKey<FormState>();
+
+}
