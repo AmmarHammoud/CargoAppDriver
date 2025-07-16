@@ -40,6 +40,7 @@ dependencies:
   bloc: ^9.0.0
   font_awesome_flutter: ^10.8.0
   conditional_builder_null_safety: ^0.0.6
+  easy_stepper: ^0.8.5+1
 
 dev_dependencies:
   flutter_test:
@@ -64,8 +65,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -90,6 +91,15 @@ flutter:
         - asset: assets/fonts/rubik/Rubik-SemiBold.ttf
         - asset: assets/fonts/rubik/Rubik-VariableFont_wght.ttf
           style: normal
-  #
+    - family: tajawal
+      fonts:
+        - asset: assets/fonts/tajawal/Tajawal-Black.ttf
+        - asset: assets/fonts/tajawal/Tajawal-Bold.ttf
+        - asset: assets/fonts/tajawal/Tajawal-ExtraBold.ttf
+        - asset: assets/fonts/tajawal/Tajawal-ExtraLight.ttf
+        - asset: assets/fonts/tajawal/Tajawal-Light.ttf
+        - asset: assets/fonts/tajawal/Tajawal-Medium.ttf
+        - asset: assets/fonts/tajawal/Tajawal-Regular.ttf
+          style: normal
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

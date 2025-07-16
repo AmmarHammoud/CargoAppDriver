@@ -1,4 +1,6 @@
+import 'package:cargo_app_driver/screens/home_page_screen/home_page_screen.dart';
 import 'package:cargo_app_driver/screens/login_screen/login_screen.dart';
+import 'package:cargo_app_driver/screens/order_details_screen/order_details_screen.dart';
 import 'package:cargo_app_driver/shared/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'shared/dio_helper/dio_helper.dart';
@@ -20,23 +22,25 @@ class MyApp extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom:
-              Radius.circular(20.0), // Apply 30px radius to bottom corners
+                  Radius.circular(20.0), // Apply 30px radius to bottom corners
             ),
           ),
         ),
-        fontFamily: 'rubik',
+        fontFamily: 'tajawal',
         primaryColor: Constants.primaryColor,
         // scaffoldBackgroundColor: Colors.white70,
         textTheme: const TextTheme(
-            titleLarge: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            bodyMedium: TextStyle(
-              fontSize: 14,
-            ),
-            bodySmall: TextStyle(
-              fontSize: 12,
-            )),
+          titleLarge: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+          ),
+          bodySmall: TextStyle(
+            fontSize: 12,
+          ),
+        ),
       ),
-      home: LoginScreen(),
+      home: OrderDetailsScreen(),
     );
   }
 }

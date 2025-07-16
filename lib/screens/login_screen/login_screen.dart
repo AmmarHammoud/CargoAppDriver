@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../shared/component/customized_botton.dart';
 import '../../shared/component/validated_text_field.dart';
 import '../../shared/constants/constants.dart';
