@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class OrderComponentPayment extends StatelessWidget {
-  const OrderComponentPayment({
+class ShipmentComponentPayment extends StatelessWidget {
+  const ShipmentComponentPayment({
     super.key,
     required this.title,
   });

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 List<EasyStep> currentOrderSteps({
   required double stepRadius,
+  required String senderName,
+  required String receiverName,
 }) {
   return [
     EasyStep(
-      title: 'husam zeneh',
+      title: senderName,
       customStep: CurrentOrderStep(
         icon: Icons.person,
         stepRadius: stepRadius,
@@ -20,7 +22,7 @@ List<EasyStep> currentOrderSteps({
     //   ),
     // ),
     EasyStep(
-      title: 'abbs nori',
+      title: receiverName,
       customStep: CurrentOrderStep(
         icon: Icons.circle,
         stepRadius: stepRadius,

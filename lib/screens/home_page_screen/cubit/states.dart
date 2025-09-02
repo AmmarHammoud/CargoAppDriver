@@ -11,3 +11,17 @@ class HomePageScreenErrorState extends HomePageScreenStates {
 
   HomePageScreenErrorState(this.error);
 }
+
+class HomePageScreenAcceptingOrRejectingShipment extends HomePageScreenStates {}
+
+class HomePageScreenShipmentAccepted extends HomePageScreenStates {
+  final String invoiceNumber;
+
+  HomePageScreenShipmentAccepted(this.invoiceNumber);
+}
+
+class HomePageScreenShipmentRejected extends HomePageScreenStates {
+  final String invoiceNumber;
+
+  HomePageScreenShipmentRejected(this.invoiceNumber);
+}

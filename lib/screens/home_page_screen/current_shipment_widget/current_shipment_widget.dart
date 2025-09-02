@@ -1,12 +1,22 @@
-import 'package:cargo_app_driver/shared/component/order_components/order_component_payment.dart';
+import 'package:cargo_app_driver/models/shipment_model.dart';
 import 'package:cargo_app_driver/shared/component/order_pipeline/order_pipeline.dart';
 import 'package:cargo_app_driver/shared/component/order_pipeline/order_pipeline_steps.dart';
+import 'package:cargo_app_driver/shared/constants/app_routes.dart';
 import 'package:cargo_app_driver/shared/constants/constants.dart';
+import 'package:cargo_app_driver/shared/storage/storage_helper.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class CurrentOrderWidget extends StatelessWidget {
-  const CurrentOrderWidget({super.key});
+import '../../../shared/component/shipment_components/shipment_component_payment.dart';
+
+class CurrentShipmentWidget extends StatelessWidget {
+  const CurrentShipmentWidget({
+    super.key,
+    required this.shipmentModel,
+  });
+
+  final ShipmentModel shipmentModel;
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +32,18 @@ class CurrentOrderWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('12550'),
+                Text(shipmentModel.invoiceNumber!),
                 Text('current order'),
               ],
             ),
-            OrderPipeline(),
+            OrderPipeline(
+              senderName: StorageHelper.getUser().userName,
+              receiverName: shipmentModel.recipient!.userName,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                OrderComponentPayment(title: 'paid with visa'),
+                ShipmentComponentPayment(title: 'paid with visa'),
                 Text('purchase'),
               ],
             ),
@@ -43,7 +56,9 @@ class CurrentOrderWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(AppRoutes.mapWidget, arguments: shipmentModel);
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

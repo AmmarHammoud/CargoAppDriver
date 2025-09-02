@@ -9,10 +9,14 @@ class OrderPipeline extends StatelessWidget {
     super.key,
     this.isHorizontal = true,
     this.stepRadius = 15.0,
+    required this.senderName,
+    required this.receiverName,
   });
 
   final bool isHorizontal;
   final double stepRadius;
+  final String senderName;
+  final String receiverName;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,11 @@ class OrderPipeline extends StatelessWidget {
       direction: isHorizontal ? Axis.horizontal : Axis.vertical,
       fitWidth: true,
       activeStep: 2,
-      steps: currentOrderSteps(stepRadius: stepRadius * 0.9),
+      steps: currentOrderSteps(
+        stepRadius: stepRadius * 0.9,
+        senderName: senderName,
+        receiverName: receiverName,
+      ),
       stepShape: StepShape.circle,
       borderThickness: 2,
       stepRadius: stepRadius,

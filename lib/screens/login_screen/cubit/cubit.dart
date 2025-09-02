@@ -1,3 +1,4 @@
+import 'package:cargo_app_driver/shared/storage/storage_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../models/user_model.dart';
@@ -15,25 +16,34 @@ class LoginScreenCubit extends Cubit<LoginScreenStates> {
   UserTextValidators userTextValidators = UserTextValidators();
   late UserModel userModel;
 
-  Login() async {
+  login() async {
     var validated =
-        userTextValidators.phoneValidator.currentState!.validate() &&
+        userTextValidators.emailValidator.currentState!.validate() &&
             userTextValidators.passwordValidator.currentState!.validate();
 
     if (!validated) return;
 
     emit(LoginScreenLoadingState());
 
-    var loginResponse = await DioHelper.login(
-      password: userTextController.passwordController.text,
-      phone: userTextController.phonController.text,
-    );
-
-    if (loginResponse.statusCode == 201) {
-      userModel = UserModel.fromJson(loginResponse.data);
-      emit(LoginScreenSuccessState());
-    } else {
-      emit(LoginScreenErrorState("the error message that comes form backend"));
+    try {
+      var loginResponse = await DioHelper.login(
+        password: userTextController.passwordController.text,
+        email: userTextController.emailController.text,
+      );
+      print(loginResponse.data['data']);
+      if (loginResponse.statusCode == 200) {
+        userModel = UserModel.fromJson(loginResponse.data['data']);
+        print('user model decoded: ${userModel.toString()}');
+        await StorageHelper.storeUser(userModel);
+        print('user token after login: ${StorageHelper.getUserToken()}');
+        emit(LoginScreenSuccessState(loginResponse.data['message']));
+      } else {
+        emit(LoginScreenErrorState(loginResponse.data['message']));
+      }
+    } catch (e, h) {
+      print(e.toString());
+      print(h.toString());
+      emit(LoginScreenErrorState(e.toString()));
     }
   }
 }

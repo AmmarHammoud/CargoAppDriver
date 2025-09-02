@@ -1,7 +1,10 @@
+import 'package:cargo_app_driver/shared/constants/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import '../../shared/component/customized_botton.dart';
+import '../../shared/component/show_toast.dart';
 import '../../shared/component/validated_text_field.dart';
 import '../../shared/constants/constants.dart';
 import 'cubit/cubit.dart';
@@ -15,7 +18,22 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginScreenCubit(),
       child: BlocConsumer<LoginScreenCubit, LoginScreenStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is LoginScreenErrorState) {
+            showToast(
+              context: context,
+              text: state.error,
+              color: Constants.errorColor,
+            );
+          } else if (state is LoginScreenSuccessState) {
+            Get.offAllNamed(AppRoutes.homeScreen);
+            showToast(
+              context: context,
+              text: state.message,
+              color: Constants.successColor,
+            );
+          }
+        },
         builder: (context, state) {
           var loginCubitObject = LoginScreenCubit.get(context);
           var screenHeight = MediaQuery.of(context).size.height;
@@ -56,77 +74,81 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                  transform: Matrix4.translationValues(0.0, -25.0, 0.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        ValidatedTextField(
-                          icon: Icons.phone,
-                          controller: loginCubitObject
-                              .userTextController.phonController,
-                          validator: loginCubitObject
-                              .userTextValidators.phoneValidator,
-                          errorText: 'phone field cannot be empty',
-                          hintText: 'phone',
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    transform: Matrix4.translationValues(0.0, -25.0, 0.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: SingleChildScrollView(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 0.4,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ValidatedTextField(
+                                icon: ConstIcons.emailIcon,
+                                controller: loginCubitObject
+                                    .userTextController.emailController,
+                                validator: loginCubitObject
+                                    .userTextValidators.emailValidator,
+                                errorText: 'email field cannot be empty',
+                                hintText: 'email',
+                              ),
+                              ValidatedTextField(
+                                icon: ConstIcons.lockIcon,
+                                obscureText: true,
+                                controller: loginCubitObject
+                                    .userTextController.passwordController,
+                                validator: loginCubitObject
+                                    .userTextValidators.passwordValidator,
+                                errorText: 'password field cannot be empty',
+                                hintText: 'password',
+                                hasNextText: false,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Checkbox(value: false, onChanged: (d) {}),
+                                      const Text('remember me'),
+                                    ],
+                                  ),
+                                  TextButton(
+                                      onPressed: () {},
+                                      child: Text('Forget Password?'))
+                                ],
+                              ),
+                              CustomizedButton(
+                                  title: 'Login',
+                                  condition: state is! LoginScreenLoadingState,
+                                  onPressed: () {
+                                    loginCubitObject.login();
+                                  }),
+                              Row(
+                                children: const [
+                                  Expanded(child: Divider()),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text('Or login with'),
+                                  ),
+                                  Expanded(child: Divider()),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        ValidatedTextField(
-                          icon: Icons.lock,
-                          obscureText: true,
-                          controller: loginCubitObject
-                              .userTextController.passwordController,
-                          validator: loginCubitObject
-                              .userTextValidators.passwordValidator,
-                          errorText: 'password field cannot be empty',
-                          hintText: 'password',
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Checkbox(value: false, onChanged: (d) {}),
-                            TextButton(
-                                onPressed: () {},
-                                child: Text('Forget Password?'))
-                          ],
-                        ),
-                        CustomizedButton(
-                            title: 'Login',
-                            condition: state is! LoginScreenLoadingState,
-                            onPressed: () {
-                              loginCubitObject.Login();
-                            }),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: const [
-                            Expanded(child: Divider()),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text('Or login with'),
-                            ),
-                            Expanded(child: Divider()),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  height: 30,
                 ),
               ],
             ),

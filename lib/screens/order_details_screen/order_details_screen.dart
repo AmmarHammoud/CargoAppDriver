@@ -2,9 +2,10 @@ import 'package:cargo_app_driver/screens/order_details_screen/order_details_addr
 import 'package:cargo_app_driver/screens/order_details_screen/order_details_info.dart';
 import 'package:cargo_app_driver/screens/order_details_screen/order_details_payment_method.dart';
 import 'package:cargo_app_driver/screens/order_details_screen/order_details_receiver_info.dart';
-import 'package:cargo_app_driver/shared/component/order_components/order_component_button.dart';
 import 'package:cargo_app_driver/shared/constants/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../shared/component/shipment_components/shipment_component_button.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   const OrderDetailsScreen({super.key});
@@ -34,8 +35,8 @@ class OrderDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: SingleChildScrollView(
           child: ConstrainedBox(
-            constraints:
-                BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 1.1),
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 1.1),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,12 +95,14 @@ class OrderDetailsScreen extends StatelessWidget {
                 OrderDetailsPaymentMethod(),
                 OrderDetailsAddress(),
                 OrderDetailsReceiverInfo(),
-                OrderComponentButton(
+                ShipmentComponentButton(
+                  onPressed: () {},
                   title: 'قبول',
                   titleColor: Colors.white,
                   backgroundColor: Constants.primaryColor,
                 ),
-                OrderComponentButton(
+                ShipmentComponentButton(
+                  onPressed: () {},
                   title: 'رفض',
                   titleColor: Constants.rejectColor,
                   backgroundColor: Colors.white,
